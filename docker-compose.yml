@@ -1,0 +1,13 @@
+
+version: '3'
+
+services:
+  
+  server:
+    build:
+      context: './server'
+      dockerfile: 'Dockerfile.dev'
+    ports:
+      - '2020:80'
+    volumes:
+      - './server:/app'
