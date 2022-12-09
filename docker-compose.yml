@@ -5,9 +5,9 @@ services:
   
   server:
     build:
-      context: './server'
+      context: './src/server'
       dockerfile: 'Dockerfile.dev'
     ports:
       - '2020:80'
     volumes:
-      - './server:/app'
+      - './src/server:/app'
