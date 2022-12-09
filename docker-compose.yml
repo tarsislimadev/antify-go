@@ -1,13 +1,9 @@
-
 version: '3'
 
 services:
-  
   server:
-    build:
-      context: './src/server'
-      dockerfile: 'Dockerfile.dev'
+    build: './src/api'
     ports:
-      - '2020:80'
+      - '80:80'
     volumes:
-      - './src/server:/app'
+      - './src/api:/app'
