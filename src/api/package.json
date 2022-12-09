@@ -4,6 +4,7 @@
   "private": "true",
   "main": "server.js",
   "scripts": {
+    "start": "node .",
     "test": "node ./test.js"
   },
   "devDependencies": {
