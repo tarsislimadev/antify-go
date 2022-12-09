@@ -1,19 +1,21 @@
 FROM node:lts-alpine
 
-ENV NODE_ENV=production
+# USER node
 
-WORKDIR /usr/src/app
+# ENV ANTIFY_ROOT_PASSWORD=root
 
-COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
+ENV ANTIFY_PATH=/data
 
-RUN npm install --production --silent && mv node_modules ../
+ENV ANTIFY_HTTP_PORT=80
+
+# ENV ANTIFY_WS_PORT=87
+
+# ENV ANTIFY_NET_PORT=22
+
+# ENV ANTIFY_DATA_PATH=/data
+
+WORKDIR /app
 
 COPY . .
 
-EXPOSE 3000
-
-RUN chown -R node /usr/src/app
-
-USER node
-
-CMD ["node", "server.js"]
+CMD npm start
