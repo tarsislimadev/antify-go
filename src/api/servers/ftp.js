@@ -1,2 +1,5 @@
+const { NotImplementedError } = require('../libs/exceptions')
 
-// FTP
+module.exports = () => {
+  throw new NotImplementedError()
+}

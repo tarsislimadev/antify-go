@@ -1,2 +1,5 @@
+const { NotImplementedError } = require('../libs/exceptions')
 
-// HTTPS
+module.exports = () => {
+  throw new NotImplementedError()
+}
