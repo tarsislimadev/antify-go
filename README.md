@@ -1,4 +1,3 @@
-
 # ANTIFY
 
 ## Setup
