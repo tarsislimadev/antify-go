@@ -1,1 +1,1 @@
-docker-compose -f ./docker-compose.yaml run api npm i
+docker-compose -f ./docker-compose.yaml run api npm install --production --silent
