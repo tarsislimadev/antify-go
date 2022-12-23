@@ -1,5 +1,6 @@
 {
 	"info": {
+		"_postman_id": "112f7162-536e-406c-9d9b-44a93f9e42f6",
 		"name": "Antify",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -8,7 +9,131 @@
 			"name": "login",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0/login?user=root&password=root",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "root"
+						},
+						{
+							"key": "password",
+							"value": "root"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createuser",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0/createuser?user=user123&password=abc123&token=123",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"path": [
+						"createuser"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "user123"
+						},
+						{
+							"key": "password",
+							"value": "abc123"
+						},
+						{
+							"key": "token",
+							"value": "123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "describeuser",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0/describeuser?user=user123&token=123",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"path": [
+						"describeuser"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "user123"
+						},
+						{
+							"key": "token",
+							"value": "123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "grantuser",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0/grantuser?perm=all&access=user123@sub.domain.com&user=/files/123",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"path": [
+						"grantuser"
+					],
+					"query": [
+						{
+							"key": "perm",
+							"value": "all"
+						},
+						{
+							"key": "access",
+							"value": "user123@sub.domain.com"
+						},
+						{
+							"key": "user",
+							"value": "/files/123"
+						}
+					]
+				}
 			},
 			"response": []
 		}
