@@ -2,6 +2,8 @@ version: '3'
 
 services:
   api:
+    image: antify
+    hostname: 'antify'
     build: './src/api'
     ports:
       - '80:80'
