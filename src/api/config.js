@@ -1,7 +1,9 @@
 const {
-  PORT: port = '80'
+  PORT = '80',
+  ENV = 'development',
 } = process.env
 
 module.exports = {
-  port
+  PORT,
+  ENV,
 }
