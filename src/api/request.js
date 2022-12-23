@@ -1,45 +1,80 @@
+const { EMPTY, BLANK, EQUALS, INTERROGATION, E_COMMERCIAL, REGEXP } = require('./constants')
+const { logger } = require('./utils')
+
 class Request {
   constructor({ chunk }) {
+    this.chunk = chunk
     this.method = this.parseMethod({ chunk })
     this.path = this.parsePath({ chunk })
     this.query = this.parseQuery({ chunk })
     this.headers = this.parseHeaders({ chunk })
+    this.body = this.parseBody({ chunk })
   }
 
-  splitLines({ chunk = '' }) {
-    return chunk.toString().split(/\r\n/ig)
+  splitLines({ chunk = EMPTY }) {
+    return chunk.toString().split(REGEXP.NEWLINE)
   }
 
-  parseFirstLine({ chunk = '' }) {
-    const [first = ''] = this.splitLines({ chunk })
-    return first.split(' ')
+  parseFirstLine({ chunk = EMPTY }) {
+    const [first = EMPTY] = this.splitLines({ chunk })
+    return first.split(BLANK)
   }
 
-  parseMethod({ chunk = '' }) {
+  parseMethod({ chunk = EMPTY }) {
     const [method] = this.parseFirstLine({ chunk })
-    return method
+    return method.toString()
   }
 
-  parseFullPath({ chunk = '' }) {
+  parseFullPath({ chunk = EMPTY }) {
     const [, fullpath,] = this.parseFirstLine({ chunk })
-    return fullpath
+    return fullpath.toString()
   }
 
-  parsePath({ chunk = '' }) {
+  parsePath({ chunk = EMPTY }) {
     const fullpath = this.parseFullPath({ chunk })
-    const [path] = fullpath.split('?')
-    return path
+    const [pathname] = fullpath.split(INTERROGATION)
+    const [, ...path] = pathname.split(EMPTY)
+    return path.join(EMPTY)
   }
 
-  parseQuery({ chunk = '' }) {
+  parseQuery({ chunk = EMPTY }) {
     const fullpath = this.parseFullPath({ chunk })
-    const [, query = ''] = fullpath.split('?')
-    return query.split('&').map((pair) => pair.split('='))
+    const [, query = EMPTY] = fullpath.split(INTERROGATION)
+
+    return query.split(E_COMMERCIAL).map((pair) => pair.split(EQUALS))
+      .reduce((query, pair) => {
+        const [key, ...values] = pair
+        const value = values.join(EQUALS)
+
+        if (key in query) { query.key.push(value) }
+        else { query.key = [value] }
+
+        return query
+      }, {})
   }
 
-  parseHeaders({ chunk = '' }) {
+  parseHeaders({ chunk = EMPTY }) {
     const [, ...lines] = this.splitLines({ chunk })
     return lines.map((line) => line.split(': ', 2))
+      .reduce((headers, pair) => {
+        const [key, value] = pair
+
+        if (key in headers) {
+          headers.key.push(value)
+        } else {
+          headers = {
+            ...headers,
+            [key]: [value]
+          }
+        }
+
+        return headers
+      }, {})
+  }
+
+  parseBody({ chunk = EMPTY }) {
+    logger('parseBody', { chunk })
+    // FIXME
   }
 }
 
