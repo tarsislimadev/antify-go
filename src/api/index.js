@@ -6,16 +6,16 @@ const Request = require('./request')
 const Response = require('./response')
 
 const server = netPkg.createServer((listener) => {
+  const end = (data = '') => listener.end(data.toString())
+
   listener.on('data', (chunk) => {
     const response = new Response({})
 
     try {
-      response.fill(app.run(new Request({ chunk }), new Response({})))
+      end((app.run(new Request({ chunk }), response)))
     } catch (e) {
-      response.setError(e)
+      end(response.setError(e))
     }
-
-    listener.end(response.toString())
   })
 })
 
