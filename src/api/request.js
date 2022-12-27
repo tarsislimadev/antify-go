@@ -1,9 +1,9 @@
 const { EMPTY, BLANK, EQUALS, INTERROGATION, E_COMMERCIAL, REGEXP } = require('./constants')
-const { logger } = require('./utils')
+const { info } = require('./libs/logger')
 
 class Request {
   constructor({ chunk }) {
-    this.chunk = chunk
+    this.chunk = chunk.toString()
     this.method = this.parseMethod({ chunk })
     this.path = this.parsePath({ chunk })
     this.query = this.parseQuery({ chunk })
@@ -46,8 +46,8 @@ class Request {
         const [key, ...values] = pair
         const value = values.join(EQUALS)
 
-        if (key in query) { query.key.push(value) }
-        else { query.key = [value] }
+        if (key in query) { query[key].push(value) }
+        else { query[key] = [value] }
 
         return query
       }, {})
@@ -60,20 +60,18 @@ class Request {
         const [key, value] = pair
 
         if (key in headers) {
-          headers.key.push(value)
+          headers[key].push(value)
         } else {
-          headers = {
-            ...headers,
-            [key]: [value]
-          }
+          headers[key] = [value]
         }
+
 
         return headers
       }, {})
   }
 
   parseBody({ chunk = EMPTY }) {
-    logger('parseBody', { chunk })
+    info('parseBody', { chunk })
     // FIXME
   }
 }
