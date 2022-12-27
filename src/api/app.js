@@ -1,15 +1,11 @@
+const { info } = require('./libs/logger')
 const { routes } = require('./routes')
-const { logger } = require('./utils')
 
 const run = (req, res) => {
-  logger('app/run', { req, res })
+  info('app/run', { req, res, routes })
 
-  // FIXME
-  
-  // return routes.filter(r => r.name == req.path)
-  //   .reduce((p, res) => route.doer.func(req, res) || res, res)
-
-  return res.toString()
+  const route = routes.find(r => r.name == req.path)
+  return route ? route.doer?.func(req, res) : res
 }
 
 module.exports = { run }
