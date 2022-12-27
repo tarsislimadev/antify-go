@@ -1,4 +1,4 @@
-const { logger } = require('./utils')
+const { info } = require('./libs/logger')
 
 class Doer {
   func = null
@@ -16,7 +16,7 @@ class Router {
   routes = []
 
   use(name = '') {
-    logger('Router.use', { name })
+    info('Router.use', { name })
 
     const doer = new Doer(name)
     this.routes.push({ name, doer })
