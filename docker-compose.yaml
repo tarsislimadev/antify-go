@@ -2,10 +2,10 @@ version: '3'
 
 services:
   api:
-    image: antify
-    hostname: 'antify'
+    image: tmvdl/projects:antify
     build: './src/api'
     ports:
       - '80:80'
     volumes:
       - './src/api:/app'
+      - '/data:/data'
