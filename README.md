@@ -1,39 +1,10 @@
 # ANTIFY
 
+# About it
+
+See [MySQL vs Antify]()
+
 ## Setup
-
-Setup environment variables
-
-```sh
-export ANTIFY_DATA_PATH=$HOME/antify
-export ANTIFY_HTTP_PORT=80
-export ANTIFY_HTTPS_PORT=443
-export ANTIFY_WS_PORT=87
-export ANTIFY_NET_PORT=22
-export ANTIFY_ROOT_PASSWORD=root
-```
-
-## How to (without Docker)
-
-Install [Git]()
-
-Checkout project at GitHub
-
-```sh
-git clone https://github.com/tmvdl/antify
-cd antify
-```
-
-Install [Node.js LTS]()
-
-Run server with Node.js LTS
-
-```sh
-node ./server
-# or
-cd ./server
-node ./server.js
-```
 
 ## How to with Docker
 
@@ -42,15 +13,12 @@ Install [Docker]()
 Run a container
 
 ```sh
-$ docker run -d --rm \
-  -v $ANTIFY_DATA_PATH:/data \
-  -p $ANTIFY_HTTP_PORT:80 \
-  -p $ANTIFY_WS_PORT:87 \
-  -p $ANTIFY_NET_PORT:22 \
-  tmvdl/antify
+$ docker run -d -v $HOME/data:/data -p 80:80 tmvdl/projects:antify
 ```
 
 ## Services
+
+Validate our services with Postman using [docs/antify.json](./docs/antify.json)
 
 ### LOGIN
 
