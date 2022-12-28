@@ -2,7 +2,7 @@ version: '3'
 
 services:
   api:
-    image: tmvdl/projects:antify
+    image: 'tmvdl/projects:antify'
     build: './src/api'
     ports:
       - '80:80'
