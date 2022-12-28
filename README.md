@@ -25,7 +25,7 @@ Validate our services with Postman using [docs/antify.json](./docs/antify.json)
 Login
 
 ```sh
-curl -sSL 'http://0.0.0.0/login?user=root&password=root'
+curl -sSL 'http://0.0.0.0/login?username=root&password=root'
 
 $ login --user user123 --password " abc 123 "
 ```
@@ -35,7 +35,7 @@ $ login --user user123 --password " abc 123 "
 Create a new user
 
 ```sh
-curl -sSL 'http://0.0.0.0/createuser?user=user123&password=abc123&host=sub.domain.com'
+curl -sSL 'http://0.0.0.0/createuser?username=user123&password=abc123&host=sub.domain.com'
 
 $ createuser --user user123 --password " abc 123 " --host sub.domain.com
 ```
@@ -43,7 +43,7 @@ $ createuser --user user123 --password " abc 123 " --host sub.domain.com
 Show user details (grants, last modification, last access, ...)
 
 ```sh
-curl -sSL 'http://0.0.0.0/describeuser?user=user123&host=sub.domain.com'
+curl -sSL 'http://0.0.0.0/describeuser?username=user123&host=sub.domain.com'
 
 $ describeuser --user user123 --host sub.domain.com
 ```
@@ -52,12 +52,12 @@ Set a permission to user
 
 ```sh
 # by access
-curl -sSL 'http://0.0.0.0/grantuser?perm=all&access=user123@sub.domain.com&user=/files/123'
+curl -sSL 'http://0.0.0.0/grantuser?perm=all&access=user123@sub.domain.com&username=/files/123'
 
 $ grantuser --perm all --access user123@sub.domain.com --name /files/123
 
 # by user and password
-curl -sSL 'http://0.0.0.0/grantuser?perm=all&user=user123&host=sub.domain.com&user=/files/123'
+curl -sSL 'http://0.0.0.0/grantuser?perm=all&username=user123&host=sub.domain.com&username=/files/123'
 
 $ grantuser --perm all --user user123 --host sub.domain.com --name /files/123
 ```
@@ -66,12 +66,12 @@ Revoke a permission from user
 
 ```sh
 # by access
-curl -sSL 'http://0.0.0.0/revokeuser?perm=all&access=user123@sub.domain.com&user=/files/123'
+curl -sSL 'http://0.0.0.0/revokeuser?perm=all&access=user123@sub.domain.com&username=/files/123'
 
 $ revokeuser --perm all --access user123@sub.domain.com --name /files/123
 
 # by user and password
-curl -sSL 'http://0.0.0.0/revokeuser?perm=all&user=user123&host=sub.domain.com&user=/files/123'
+curl -sSL 'http://0.0.0.0/revokeuser?perm=all&username=user123&host=sub.domain.com&username=/files/123'
 
 $ revokeuser --perm all --user user123 --host sub.domain.com --name /files/123
 ```
@@ -79,7 +79,7 @@ $ revokeuser --perm all --user user123 --host sub.domain.com --name /files/123
 Delete a user and his grants
 
 ```sh
-curl -sSL 'http://0.0.0.0/deleteuser?user=user123&host=sub.domain.com'
+curl -sSL 'http://0.0.0.0/deleteuser?username=user123&host=sub.domain.com'
 
 $ deleteuser --user user123 --host sub.domain.com
 ```
@@ -93,7 +93,7 @@ curl -sSL 'http://0.0.0.0/deleteallusers'
 $ deleteallusers
 
 # users with name "user123"
-curl -sSL 'http://0.0.0.0/deleteallusers?user=user123'
+curl -sSL 'http://0.0.0.0/deleteallusers?username=user123'
 
 $ deleteallusers --user user123
 
@@ -112,7 +112,7 @@ curl -sSL 'http://0.0.0.0/listallusers'
 $ listallusers
 
 # users with name "user123"
-curl -sSL 'http://0.0.0.0/listallusers?user=user123'
+curl -sSL 'http://0.0.0.0/listallusers?username=user123'
 
 $ listallusers --user user123
 
