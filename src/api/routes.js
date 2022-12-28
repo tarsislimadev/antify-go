@@ -1,12 +1,27 @@
-const router = require('./router')
+const router = require('./libs/router')
+
+const { info } = require('./libs/logger')
+
 const actions = require('./actions')
 
-router.use('login').do((_, res) =>
-  res.setJSON(actions.login({ user: 'user', password: 'password', })) // FIXME
-)
+router.use('login').do(({ query }, res) => {
+  info('routes/login', { query, res })
 
-router.use('createuser').do(({ body, header }, res) =>
-  res.setJSON(actions.createuser({ token: header.token, ...body }))
-)
+  res.setJSON(actions.login({
+    username: query.username?.[0],
+    password: query.password?.[0],
+  }))
+})
+
+router.use('createuser').do(({ query, header }, res) => {
+  info('routes/createuser', { query, header, res })
+
+  res.setJSON(actions.createuser({
+    token: header.token,
+    username: query.username?.[0],
+    password: query.password?.[0],
+    host: query.password?.[0],
+  }))
+})
 
 module.exports = router
