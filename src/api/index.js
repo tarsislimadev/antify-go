@@ -2,8 +2,8 @@ const netPkg = require('net')
 const { PORT } = require('./config')
 
 const app = require('./app')
-const Request = require('./request')
-const Response = require('./response')
+
+const { Request, Response } = require('./libs/http')
 
 const server = netPkg.createServer((listener) => {
   const end = (data = '') => listener.end(data.toString())
