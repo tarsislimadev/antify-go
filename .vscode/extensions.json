@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "ms-azuretools.vscode-docker",
-        "loiane.angular-extension-pack"
+        "loiane.angular-extension-pack",
+        "dbaeumer.vscode-eslint"
     ]
 }
