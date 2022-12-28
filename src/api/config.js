@@ -8,4 +8,5 @@ const {
 module.exports = {
   PORT,
   ENV,
+  DATA_PATH,
 }
