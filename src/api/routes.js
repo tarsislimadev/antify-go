@@ -7,7 +7,7 @@ const actions = require('./actions')
 router.use('login').do(({ query }, res) => {
   info('routes/login', { query, res })
 
-  res.setJSON(actions.login({
+  return res.setJSON(actions.login({
     username: query.username?.[0],
     password: query.password?.[0],
   }))
@@ -16,7 +16,7 @@ router.use('login').do(({ query }, res) => {
 router.use('createuser').do(({ query, header }, res) => {
   info('routes/createuser', { query, header, res })
 
-  res.setJSON(actions.createuser({
+  return res.setJSON(actions.createuser({
     token: header.token,
     username: query.username?.[0],
     password: query.password?.[0],
