@@ -18,6 +18,10 @@ class Response {
     this.body.message = e.message
     this.body.data = { stack }
 
+    if (e instanceof ApplicationError) {
+      this.body.data.extras = e.extras
+    }
+
     return this
   }
 
