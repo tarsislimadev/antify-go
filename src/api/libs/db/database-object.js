@@ -11,12 +11,12 @@ class DatabaseObject {
   id = null
   dirname = null
 
-  constructor(index, id = null) {
+  constructor(index, id = uuid()) {
     info('lib/db/DatabaseObject', { index, id })
 
     this.index = index
 
-    this.id = id === null ? uuid() : id
+    this.id = id
 
     this.dirname = path.resolve(index, id)
 
