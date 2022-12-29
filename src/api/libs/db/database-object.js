@@ -11,12 +11,12 @@ class DatabaseObject {
   id = null
   dirname = null
 
-  constructor(index, id = '') {
+  constructor(index, id = null) {
     info('lib/db/DatabaseObject', { index, id })
 
     this.index = index
 
-    this.id = id || uuid()
+    this.id = id === null ? uuid() : id
 
     this.dirname = path.resolve(index, id)
 
@@ -39,6 +39,7 @@ class DatabaseObject {
     const self = this
 
     Object.keys(props)
+      .filter(prop => !!prop && !!props[prop])
       .map((prop) => self.write(prop.toString(), props[prop].toString()))
 
     return this
