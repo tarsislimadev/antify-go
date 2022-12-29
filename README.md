@@ -1,6 +1,8 @@
 # ANTIFY
 
-[![shields](https://img.shields.io/github/actions/workflow/status/brtmvdl/antify/docker-push.yml)](https://img.shields.io/github/actions/workflow/status/brtmvdl/antify/docker-push.yml)
+[![github/actions/workflow/status](https://img.shields.io/github/actions/workflow/status/brtmvdl/antify/docker-push.yml)](https://img.shields.io/github/actions/workflow/status/brtmvdl/antify/docker-push.yml)
+
+[![github/license](https://img.shields.io/github/license/brtmvdl/antify)](https://img.shields.io/github/license/brtmvdl/antify)
 
 # About it
 
