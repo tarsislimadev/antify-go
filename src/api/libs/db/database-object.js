@@ -1,5 +1,9 @@
 const path = require('path')
 
+const { info } = require('../logger')
+
+const { mkdirSync, writeFileSync } = require('../fs')
+
 const { v4: uuid } = require('../uuid')
 
 class DatabaseObject {
@@ -35,7 +39,7 @@ class DatabaseObject {
     const self = this
 
     Object.keys(props)
-      .map((prop) => self.write(prop, props[prop]))
+      .map((prop) => self.write(prop.toString(), props[prop].toString()))
 
     return this
   }
