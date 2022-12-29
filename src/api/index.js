@@ -4,6 +4,8 @@ const { PORT } = require('./config')
 const app = require('./app')
 
 const { Request, Response } = require('./libs/http')
+const { info } = require('./libs/logger')
+const { ApplicationError } = require('./libs/errors')
 
 const server = netPkg.createServer((listener) => {
   const end = (data = '') => listener.end(data.toString())
@@ -11,11 +13,24 @@ const server = netPkg.createServer((listener) => {
   listener.on('data', (chunk) => {
     const response = new Response({})
 
+    let resp = null
+
     try {
-      end((app.run(new Request({ chunk }), response)))
+      const request = new Request({ chunk })
+
+      resp = app.run(request, response)
+
+      if (resp === undefined) {
+        throw new ApplicationError('No response', { request, response, resp })
+      }
+
     } catch (e) {
-      end(response.setError(e))
+      resp = response.setError(e)
     }
+
+    info('HTTP Response', { resp })
+
+    end(resp)
   })
 })
 
