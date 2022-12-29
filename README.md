@@ -1,5 +1,7 @@
 # ANTIFY
 
+[![shields](https://img.shields.io/github/actions/workflow/status/brtmvdl/antify/docker-push.yml)](https://img.shields.io/github/actions/workflow/status/brtmvdl/antify/docker-push.yml)
+
 # About it
 
 See [MySQL vs Antify]()
