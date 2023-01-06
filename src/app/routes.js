@@ -16,12 +16,12 @@ router.use('login').do(({ query }, res) => {
 router.use('createuser').do(({ query, header }, res) => {
   info('routes/createuser', { query, header, res })
 
-  return res.setJSON(actions.createuser({
-    token: header.token,
-    username: query.username?.[0],
-    password: query.password?.[0],
-    host: query.password?.[0],
-  }))
+  const token = query.token[0]
+  const username = query.username[0]
+  const password = query.password[0]
+  const host = query.host?.[0]
+
+  return res.setJSON(actions.createuser({ token, username, password, host, }))
 })
 
 module.exports = router
