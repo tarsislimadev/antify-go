@@ -1,11 +1,12 @@
 version: '3'
 
 services:
-  api:
+  app:
     image: 'tmvdl/projects:antify'
-    build: './src/api'
+    container_name: 'app'
+    build: './src/app'
     ports:
       - '80:80'
     volumes:
-      - './src/api:/app'
+      - './src/app:/app'
       - '/data:/data'
