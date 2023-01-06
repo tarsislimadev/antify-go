@@ -1,3 +1,5 @@
+require('./init')
+
 const netPkg = require('net')
 const { PORT } = require('./config')
 
