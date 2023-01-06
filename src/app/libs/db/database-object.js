@@ -12,7 +12,7 @@ class DatabaseObject {
   dirname = null
 
   constructor(index, id = uuid()) {
-    info('lib/db/DatabaseObject', { index, id })
+    info('libs/db/DatabaseObject', { index, id })
 
     this.index = index
 
@@ -24,7 +24,7 @@ class DatabaseObject {
   }
 
   write(name, value = null) {
-    info('lib/db/DatabaseObject.write', { name, value })
+    info('libs/db/DatabaseObject.write', { name, value })
 
     const filename = path.resolve(this.dirname, name)
 
@@ -34,7 +34,7 @@ class DatabaseObject {
   }
 
   writeMany(props = {}) {
-    info('lib/db/DatabaseObject.writeMany', { props })
+    info('libs/db/DatabaseObject.writeMany', { props })
 
     const self = this
 
