@@ -9,7 +9,7 @@ class Database {
   dirname = ''
 
   constructor(dirname = '') {
-    logger.info('libs/db/database/Database')
+    logger.info('libs/db/database/Database', { dirname })
 
     this.dirname = dirname
 
@@ -17,9 +17,9 @@ class Database {
   }
 
   find(dirname = '') {
-    logger.info('libs/db/database/Database.find')
+    logger.info('libs/db/database/Database.find', { dirname })
 
-    return fs.readdirSync(path.resolve(this.dirname, dirname))
+    return fs.readdirSync(path.resolve(this.dirname, dirname)) || []
   }
 
   new() {
@@ -29,7 +29,7 @@ class Database {
   }
 
   in(dirname = '') {
-    logger.info('libs/db/database/Database.in')
+    logger.info('libs/db/database/Database.in', { dirname })
 
     return new Database(path.resolve(this.dirname, dirname))
   }
