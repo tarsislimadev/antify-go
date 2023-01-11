@@ -4,21 +4,11 @@
 
 A fast open source database
 
-## Setup
-
-### How to with Docker
-
-Install [Docker](https://docs.docker.com/get-docker/) 
-
-Run a container
-
-```sh
-$ docker run -d -v $HOME/data:/data -p 80:80 tmvdl/projects:antify
-```
-
 ## Documentation
 
-[See more](./docs/how-to.md)
+[docs](./docs/docs.md)
+
+[set up](./docs/set-up.md)
 
 ## License
 
