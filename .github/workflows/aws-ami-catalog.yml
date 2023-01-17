@@ -1,0 +1,13 @@
+name: AWS AMI Catalog
+
+on:
+  schedule:
+    - cron: '10 10 * * *'
+  workflow_dispatch:
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+        name: Docker pull
+        run: echo AWS AMI Catalog
