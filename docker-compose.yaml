@@ -9,3 +9,7 @@ services:
     volumes:
       - './src/app:/app'
       - '/data:/data'
+
+  github-release:
+    image: 'github-release'
+    build: './src'
