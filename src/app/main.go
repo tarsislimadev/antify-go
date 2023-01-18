@@ -16,8 +16,8 @@ type Response struct {
 }
 
 func main() {
-	path := os.Getenv("PATH")
-	port := os.Getenv("PORT")
+	path := os.Getenv("ANTIFY_PATH")
+	port := os.Getenv("ANTIFY_PORT")
 
 	log.Println("Antify v0.1.0")
 	log.Println("PATH: " + path + "; PORT: " + port + "; ")
