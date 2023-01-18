@@ -3,7 +3,6 @@ version: '3'
 services:
   app:
     image: 'tmvdl/projects:antify'
-    container_name: 'app'
     build: './src/app'
     ports:
       - '80:80'
