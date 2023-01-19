@@ -1,29 +1,28 @@
 package main
 
-import (
-	"os"
-	"fmt"
-	"log"
-	"net"
-	"bufio"
-	"encoding/json"
-)
-
-type Response struct {
-	Status string `json:"status"`
-	Message string `json:"message"`
-	Data map[string]interface{} `json:"data"`
-}
+import "os"
+import "fmt"
+import "log"
+import "net"
+import "flag"
+import "bufio"
+import http "github.com/brtmvdl/antify/http"
 
 func main() {
 	path := os.Getenv("ANTIFY_PATH")
-	port := os.Getenv("ANTIFY_PORT")
+	if (path == "") { path = *flag.String("path", "/data", "Antify data path") }
 
-	log.Println("Antify v0.1.0")
-	log.Println("PATH: " + path + "; PORT: " + port + "; ")
+	port := os.Getenv("ANTIFY_PORT")
+	if (port == "") { port = *flag.String("port", "80", "Antify HTTP port") }
+
+	fmt.Println("Antify v0.1.0")
+	fmt.Println("PATH: " + path + "; PORT: " + port + "; ")
+
+	dial(port)
 
 	ln, err := net.Listen("tcp", ":" + port)
 	logPanic(err)
+	defer ln.Close()
 
 	for {
 		conn, err := ln.Accept()
@@ -33,15 +32,37 @@ func main() {
 }
 
 func logPanic(err error) {
-	if err != nil {
+	if (err != nil) {
 		log.Panic(err)
+	}
+}
+
+func dial(port string) {
+	_, err := net.Dial("tcp", ":" + port)
+	if err != nil {
+		panic("Can not listen at port " + port)
 	}
 }
 
 func handle(conn net.Conn) {
 	defer conn.Close()
 
+	fmt.Println(getRequest(conn).ToString())
+
+	fmt.Fprintf(conn, http.GetFirstLine("200"))
+	fmt.Fprintf(conn, http.GetContentType())
+	fmt.Fprintf(conn, "")
+	fmt.Fprintf(conn, http.GetJSONString(http.Response{
+		Status: "ok",
+		Message: "",
+		Data: nil,
+	}))
+}
+
+func getRequest(conn net.Conn) http.Request {
 	scanner := bufio.NewScanner(bufio.NewReader(conn))
+
+	lines := make([]string, 0)
 
 	for scanner.Scan() {
 		line := ""
@@ -50,43 +71,12 @@ func handle(conn net.Conn) {
 			break
 		}
 
-		log.Println(line)
+		lines = append(lines, line)
 	}
 
-	fmt.Fprintf(conn, getFirstLine("200"))
-	fmt.Fprintf(conn, getContentType())
-	fmt.Fprintf(conn, getString(""))
-	fmt.Fprintf(conn, getJSONString(Response{
-		Status: "ok",
-		Message: "",
-		Data: nil,
-	}))
-}
-
-func getStatusMessage(status string) string {
-	switch status {
-		case "200": return "OK";
-		case "404": return "NOT FOUND";
+	return http.Request{
+		First: lines[0],
+		Headers: lines[1:],
+		Body: "",
 	}
-
-	return "ERROR";
-}
-
-func getFirstLine(status string) string {
-	message := getStatusMessage(status)
-	return getString("HTTP/1.1 " + status + " " + message)
-}
-
-func getContentType() string {
-	return getString("Content-Type: application/json")
-}
-
-func getString(str string) string {
-	return str + "\r\n"
-}
-
-func getJSONString(obejct any) string {
-	bytes, err := json.Marshal(obejct)
-	logPanic(err)
-	return string(bytes)
 }
