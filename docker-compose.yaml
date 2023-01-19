@@ -1,9 +1,13 @@
 version: '3'
 
 services:
+
   app:
     image: 'tmvdl/projects:antify'
     build: './src/app'
+    environment:
+      - 'PORT=80'
+      - 'PATH=/data'
     ports:
       - '80:80'
     volumes:
@@ -12,4 +16,4 @@ services:
 
   github-release:
     image: 'github-release'
-    build: './src'
+    build: './src/app'
