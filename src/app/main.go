@@ -7,6 +7,7 @@ import "log"
 import "net"
 import "flag"
 import "bufio"
+import "strings"
 import "encoding/json"
 import http "github.com/brtmvdl/antify/http"
 
@@ -83,9 +84,34 @@ func getRequest(conn net.Conn) http.Request {
 		lines = append(lines, line)
 	}
 
+	// method := getRequestMethod(lines[0])
+	// path := getRequestPath(lines[0])
+	// query := getRequestQuery(lines[0])
+	// headers := getRequestHeaders(lines[1:])
+
 	return http.Request{
 		First: lines[0],
 		Headers: lines[1:],
 		Body: "",
 	}
+}
+
+func getRequestMethod(str string) string {
+	parts := strings.Split(str, " ")
+	return parts[0]
+}
+
+func getRequestPath(str string) string {
+	parts := strings.Split(str, " ")
+	pathAndQuery := strings.Split(parts[1], "?")
+
+	return pathAndQuery[0]
+}
+
+func getRequestQuery(str string) map[string][]string {
+	return make(map[string][]string)
+}
+
+func getRequestHeaders(str string) map[string][]string {
+	return make(map[string][]string)
 }
