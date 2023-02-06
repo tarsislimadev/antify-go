@@ -1,11 +1,13 @@
 package main
 
+import "io"
 import "os"
 import "fmt"
 import "log"
 import "net"
 import "flag"
 import "bufio"
+import "encoding/json"
 import http "github.com/brtmvdl/antify/http"
 
 func main() {
@@ -18,7 +20,7 @@ func main() {
 	fmt.Println("Antify v0.1.0")
 	fmt.Println("PATH: " + path + "; PORT: " + port + "; ")
 
-	dial(port)
+	// dial(port)
 
 	ln, err := net.Listen("tcp", ":" + port)
 	logPanic(err)
@@ -44,19 +46,26 @@ func dial(port string) {
 	}
 }
 
+func printResponse(w io.Writer, str string) {
+	fmt.Fprintf(w, str + "\r\n")
+}
+
 func handle(conn net.Conn) {
 	defer conn.Close()
 
 	fmt.Println(getRequest(conn).ToString())
 
-	fmt.Fprintf(conn, http.GetFirstLine("200"))
-	fmt.Fprintf(conn, http.GetContentType())
-	fmt.Fprintf(conn, "")
-	fmt.Fprintf(conn, http.GetJSONString(http.Response{
+	res, err := json.Marshal(http.Response{
 		Status: "ok",
 		Message: "",
 		Data: nil,
-	}))
+	})
+	logPanic(err)
+
+	printResponse(conn, http.GetFirstLine("200"))
+	printResponse(conn, http.GetContentType())
+	printResponse(conn, "")
+	printResponse(conn, string(res))
 }
 
 func getRequest(conn net.Conn) http.Request {
