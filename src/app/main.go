@@ -1,6 +1,5 @@
 package main
 
-import "io"
 import "os"
 import "fmt"
 import "log"
@@ -8,7 +7,6 @@ import "net"
 import "flag"
 import "bufio"
 import "strings"
-import "encoding/json"
 import http "github.com/brtmvdl/antify/http"
 
 func main() {
@@ -45,29 +43,22 @@ func dial(port string) {
 	}
 }
 
-func printResponse(w io.Writer, str string) {
-	fmt.Fprintf(w, str + "\r\n")
-}
-
 func handle(conn net.Conn) {
 	defer conn.Close()
 
 	request := getRequest(conn)
 	response := run(request, http.Response{})
 
-	res, err := json.Marshal(response)
-	logPanic(err)
-
-	printResponse(conn, http.GetFirstLine("200"))
-	printResponse(conn, http.GetContentType())
-	printResponse(conn, "")
-	printResponse(conn, string(res))
+	fmt.Fprintf(conn, response.ToString() + "\r\n")
 }
 
 func run(req http.Request, res http.Response) http.Response {
-	return http.Response{}
+	fmt.Println("Run: ", req.Path) // FIXME
+	return http.Response{
+		Status: "200",
+		ContentType: "application/json",
+	}
 }
-
 
 func getRequest(conn net.Conn) http.Request {
 	scanner := bufio.NewScanner(bufio.NewReader(conn))
@@ -87,7 +78,7 @@ func getRequest(conn net.Conn) http.Request {
 	return http.Request{
 		Method: getRequestMethod(lines),
 		Path: getRequestPath(lines),
-		Query: getRequestQuery(lines),
+		// Query: getRequestQuery(lines),
 		Headers: getRequestHeaders(lines),
 		Body: "",
 	}
@@ -106,14 +97,17 @@ func getRequestPath(str []string) string {
 }
 
 func getRequestQuery(request []string) map[string][]string {
-	parts := strings.Split(request[0], " ")
-	pathAndQuery := strings.Split(parts[1], "?")
-	splitedQueries := strings.Split(pathAndQuery[1], "&")
 	requestQuery := make(map[string][]string)
 
-	for _, splitedQuery := range splitedQueries {
-		pairQuery := strings.Split(splitedQuery, "=")
-		requestQuery[pairQuery[0]] = []string{pairQuery[1]}
+	if len(request) > 0 {
+		parts := strings.Split(request[0], " ")
+		pathAndQuery := strings.Split(parts[1], "?")
+		splitedQueries := strings.Split(pathAndQuery[1], "&")
+
+		for _, splitedQuery := range splitedQueries {
+			pairQuery := strings.Split(splitedQuery, "=")
+			requestQuery[pairQuery[0]] = []string{pairQuery[1]}
+		}
 	}
 
 	return requestQuery
