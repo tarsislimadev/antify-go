@@ -8,6 +8,7 @@ import "flag"
 import "bufio"
 import "strings"
 import http "github.com/brtmvdl/antify/http"
+import actions "github.com/brtmvdl/antify/actions"
 
 func main() {
 	path := os.Getenv("ANTIFY_PATH")
@@ -47,17 +48,25 @@ func handle(conn net.Conn) {
 	defer conn.Close()
 
 	request := getRequest(conn)
-	response := run(request, http.Response{})
+	response := run(request)
 
 	fmt.Fprintf(conn, response.ToString() + "\r\n")
 }
 
-func run(req http.Request, res http.Response) http.Response {
+func run(req http.Request) http.Response {
 	fmt.Println("Run: ", req.Path) // FIXME
-	return http.Response{
+
+	res := http.Response{
 		Status: "200",
 		ContentType: "application/json",
 	}
+
+	switch req.Path {
+		case "login": return actions.Login(req, res)
+		case "createuser": return actions.CreateUser(req, res)
+	}
+
+	return res
 }
 
 func getRequest(conn net.Conn) http.Request {
