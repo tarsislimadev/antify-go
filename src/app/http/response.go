@@ -23,8 +23,15 @@ func (body ResponseBody) ToString() string {
 type Response struct {
 	Status string
 	ContentType string
+	Headers []string
 	Body ResponseBody
 }
+
+func (res *Response) AddHeader(key string, value string) error {
+	res.Headers = append(res.Headers, key + ": " + value)
+
+	return nil
+} 
 
 func (res Response) ToString() string {
 	str := make([]string, 0)
@@ -32,6 +39,10 @@ func (res Response) ToString() string {
 	str = append(str, GetFirstLine(res.Status))
 
 	str = append(str, GetContentType())
+
+	if len(res.Headers) > 0 {
+		str = append(str, strings.Join(res.Headers, LINE_BREAK))
+	}
 
 	str = append(str, "")
 
