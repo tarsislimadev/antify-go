@@ -9,7 +9,7 @@ services:
       - 'PORT=80'
       - 'PATH=/data'
     ports:
-      - '80:80'
+      - '8080:80'
     volumes:
       - './src/app:/app'
       - '/data:/data'
