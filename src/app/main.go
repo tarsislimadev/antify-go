@@ -87,7 +87,7 @@ func getRequest(conn net.Conn) http.Request {
 	return http.Request{
 		Method: getRequestMethod(lines),
 		Path: getRequestPath(lines),
-		// Query: getRequestQuery(lines),
+		Query: getRequestQuery(lines),
 		Headers: getRequestHeaders(lines),
 		Body: "",
 	}
