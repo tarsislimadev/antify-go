@@ -21,3 +21,15 @@ func (r Request) ToString() string {
 
 	return strings.Join(strArr, LINE_BREAK)
 }
+
+func (r Request) GetQuery(b string) []string {
+	return make([]string, 0)
+}
+
+func (r Request) GetQueryFirst(b string) string {
+	for _, query := range r.GetQuery(b) {
+		return query
+	}
+
+	return ""
+}
