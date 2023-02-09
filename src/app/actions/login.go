@@ -1,8 +1,6 @@
 package antify
 
 import "os"
-import "fmt"
-
 import http "github.com/brtmvdl/antify/http"
 import database "github.com/brtmvdl/antify/database"
 
