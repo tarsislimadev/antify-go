@@ -77,3 +77,9 @@ func (res Response) GetContentType() string {
 func (res Response) GetHeaders() string {
 	return strings.Join(res.Headers, LINE_BREAK)
 }
+
+func (res Response) SetJSON(json map[string]interface{}) Response {
+	res.Body = ResponseBody{"ok", "", json}
+
+	return res
+}
