@@ -66,7 +66,7 @@ func run(req http.Request) http.Response {
 		case "createuser": return actions.CreateUser(req, res)
 	}
 
-	return res
+	return res.SetError("404", "Not Found")
 }
 
 func getRequest(conn net.Conn) http.Request {
@@ -108,13 +108,21 @@ func getRequestPath(str []string) string {
 func getRequestQuery(request []string) map[string][]string {
 	requestQuery := make(map[string][]string)
 
-	if len(request) > 0 {
-		parts := strings.Split(request[0], " ")
-		pathAndQuery := strings.Split(parts[1], "?")
-		splitedQueries := strings.Split(pathAndQuery[1], "&")
+	if len(request) == 0 {
+		return requestQuery
+	}
 
-		for _, splitedQuery := range splitedQueries {
-			pairQuery := strings.Split(splitedQuery, "=")
+	parts := strings.Split(request[0], " ")
+	pathAndQuery := strings.Split(parts[1], "?")
+
+	if len(pathAndQuery) != 2 {
+		return requestQuery
+	}
+
+	splitedQueries := strings.Split(pathAndQuery[1], "&")
+
+	for _, splitedQuery := range splitedQueries {
+		if pairQuery := strings.Split(splitedQuery, "="); len(pairQuery) == 2 {
 			requestQuery[pairQuery[0]] = []string{pairQuery[1]}
 		}
 	}
