@@ -9,11 +9,11 @@ func Login (req http.Request, res http.Response) http.Response {
 	login := db.In("logins").New()
 
 	login.WriteMany(map[string][]byte{
-		"username": []byte(req.Query["username"]),
-		"password": []byte(req.Query["password"]),
+		"username": []byte(req.GetQueryFirst("username")),
+		"password": []byte(req.GetQueryFirst("password")),
 	})
 
-	res.Body = http.ResponseBody{"ok", "", map[string]interface{}}
+	res.Body = http.ResponseBody{"ok", "", make(map[string]interface{})}
 
 	return res
 }
