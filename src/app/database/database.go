@@ -10,10 +10,6 @@ type Database struct {
 	DataPath string
 }
 
-// const DEFAULT = Database{
-// 	DataPath: os.Getenv("ANTIFY_PATH"),
-// }
-
 func (db Database) In(dataPath string) Database {
 	return Database{
 		DataPath: strings.Join([]string{db.DataPath, dataPath}, SLASH),
