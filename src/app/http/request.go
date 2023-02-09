@@ -11,25 +11,25 @@ type Request struct {
 }
 
 func (r Request) ToString() string {
-	strArr := make([]string, 0)
-
-	strArr = append(strArr, "Method: " + r.Method)
-
-	strArr = append(strArr, "Path: " + r.Path)
-
-	strArr = append(strArr, "Body: " + r.Body)
-
-	return strings.Join(strArr, LINE_BREAK)
+	return strings.Join([]string{
+		r.Method,
+		r.Path,
+		// r.Query,
+		// r.Headers,
+		r.Body,
+	}, LINE_BREAK)
 }
 
-func (r Request) GetQuery(b string) []string {
-	return make([]string, 0)
+func (r Request) GetQuery(q string) []string {
+	return r.Query[q]
 }
 
-func (r Request) GetQueryFirst(b string) string {
-	for _, query := range r.GetQuery(b) {
-		return query
+func (r Request) GetQueryFirst(q string) string {
+	query := r.GetQuery(q)
+
+	if (len(query) == 0) {
+		return ""
 	}
 
-	return ""
+	return query[0]
 }

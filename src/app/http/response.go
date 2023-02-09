@@ -27,28 +27,32 @@ type Response struct {
 	Body ResponseBody
 }
 
-func (res *Response) AddHeader(key string, value string) error {
+func (res Response) SetError(status string, message string) Response {
+	return Response{
+		Status: status,
+		ContentType: res.ContentType,
+		Headers: res.Headers,
+		Body: ResponseBody{
+			Status: "error",
+			Message: message,
+			Data: nil,
+		},
+	}
+}
+
+func (res Response) AddHeader(key string, value string) Response {
 	res.Headers = append(res.Headers, key + ": " + value)
 
-	return nil
+	return res
 } 
 
 func (res Response) ToString() string {
-	str := make([]string, 0)
-
-	str = append(str, GetFirstLine(res.Status))
-
-	str = append(str, GetContentType())
-
-	if len(res.Headers) > 0 {
-		str = append(str, strings.Join(res.Headers, LINE_BREAK))
-	}
-
-	str = append(str, "")
-
-	str = append(str, res.Body.ToString())
-
-	return strings.Join(str, LINE_BREAK)
+	return strings.Join([]string{
+		res.GetFirstLine(),
+		res.GetContentType(),
+		res.GetHeaders(),
+		res.Body.ToString(),
+	}, LINE_BREAK)
 }
 
 func GetStatusMessage(status string) string {
@@ -60,11 +64,16 @@ func GetStatusMessage(status string) string {
 	return "ERROR";
 }
 
-func GetFirstLine(status string) string {
+func (res Response) GetFirstLine() string {
+	status := res.Status
 	message := GetStatusMessage(status)
 	return strings.Join([]string{"HTTP/1.1", status, message}, BLANK)
 }
 
-func GetContentType() string {
-	return strings.Join([]string{CONTENT_TYPE, "application/json"}, ": ")
+func (res Response) GetContentType() string {
+	return strings.Join([]string{CONTENT_TYPE, res.ContentType}, ": ")
+}
+
+func (res Response) GetHeaders() string {
+	return strings.Join(res.Headers, LINE_BREAK)
 }
