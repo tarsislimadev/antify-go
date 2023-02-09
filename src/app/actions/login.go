@@ -1,6 +1,8 @@
 package antify
 
 import "os"
+import "fmt"
+
 import http "github.com/brtmvdl/antify/http"
 import database "github.com/brtmvdl/antify/database"
 
@@ -13,7 +15,9 @@ func Login (req http.Request, res http.Response) http.Response {
 		"password": []byte(req.GetQueryFirst("password")),
 	})
 
-	res.Body = http.ResponseBody{"ok", "", make(map[string]interface{})}
+	json := make(map[string]interface{})
 
-	return res
+	json["id"] = login.Id
+
+	return res.SetJSON(json)
 }
