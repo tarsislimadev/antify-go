@@ -1,5 +1,9 @@
 package antify
 
+import "fmt"
+
+import "math/rand"
+
 func New() string {
-	return string(1) // FIXME
+	return fmt.Sprint(rand.Int())
 }
