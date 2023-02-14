@@ -5,8 +5,6 @@ import "fmt"
 import "log"
 import "net"
 import "flag"
-import "bufio"
-import "strings"
 import http "github.com/brtmvdl/antify/http"
 import actions "github.com/brtmvdl/antify/actions"
 
@@ -47,21 +45,18 @@ func dial(port string) {
 func handle(conn net.Conn) {
 	defer conn.Close()
 
-	request := getRequest(conn)
+	request := http.NewRequest(conn) 
 	response := run(request)
 
 	fmt.Fprintf(conn, response.ToString() + "\r\n")
 }
 
 func run(req http.Request) http.Response {
-	fmt.Println("Run: ", req.Path) // FIXME
+	fmt.Println("Run: ", req.ToString())
 
-	res := http.Response{
-		Status: "200",
-		ContentType: "application/json",
-	}
+	res := http.NewResponse()
 
-	switch req.Path {
+	switch http.GetPath(req.Lines) {
 		case "login": return actions.Login(req, res)
 		case "createuser": return actions.CreateUser(req, res)
 	}
@@ -69,83 +64,3 @@ func run(req http.Request) http.Response {
 	return res.SetError("404", "Not Found")
 }
 
-func getRequest(conn net.Conn) http.Request {
-	scanner := bufio.NewScanner(bufio.NewReader(conn))
-
-	lines := make([]string, 0)
-
-	for scanner.Scan() {
-		line := ""
-
-		if line = scanner.Text(); line == "" {
-			break
-		}
-
-		lines = append(lines, line)
-	}
-
-	return http.Request{
-		Method: getRequestMethod(lines),
-		Path: getRequestPath(lines),
-		Query: getRequestQuery(lines),
-		Headers: getRequestHeaders(lines),
-		Body: "",
-	}
-}
-
-func getRequestMethod(str []string) string {
-	parts := strings.Split(str[0], " ")
-	return parts[0]
-}
-
-func getRequestPath(str []string) string {
-	parts := strings.Split(str[0], " ")
-	pathAndQuery := strings.Split(parts[1], "?")
-
-	return pathAndQuery[0][1:]
-}
-
-func getRequestQuery(request []string) map[string][]string {
-	requestQuery := make(map[string][]string)
-
-	if len(request) == 0 {
-		return requestQuery
-	}
-
-	parts := strings.Split(request[0], " ")
-	pathAndQuery := strings.Split(parts[1], "?")
-
-	if len(pathAndQuery) != 2 {
-		return requestQuery
-	}
-
-	splitedQueries := strings.Split(pathAndQuery[1], "&")
-
-	for _, splitedQuery := range splitedQueries {
-		if pairQuery := strings.Split(splitedQuery, "="); len(pairQuery) == 2 {
-			requestQuery[pairQuery[0]] = []string{pairQuery[1]}
-		}
-	}
-
-	return requestQuery
-}
-
-func getRequestHeaders(request []string) map[string]string {
-	requestHeaders := make(map[string]string)
-
-	for i, line := range request {
-		if i == 0 {
-			continue
-		}
-
-		if line == "" {
-			break
-		}
-
-		pair := strings.Split(line, ": ")
-
-		requestHeaders[pair[0]] = pair[1]
-	}
-
-	return requestHeaders
-}
