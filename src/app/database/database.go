@@ -27,6 +27,12 @@ func (db Database) New() DatabaseObject {
 	return obj
 }
 
+func (db Database) ToString() string {
+	return strings.Join([]string{
+		db.DataPath,
+	},LINE_BREAK)
+}
+
 type DatabaseObject struct {
 	Database
 	Id string
@@ -55,3 +61,11 @@ func (obj DatabaseObject) WriteMany(props map[string][]byte) []error {
 func (obj DatabaseObject) Write(name string, value []byte) error {
 	return nil
 }
+
+func (obj DatabaseObject) ToString() string {
+	return strings.Join([]string{
+		obj.Database.DataPath,
+		obj.Id,
+	}, LINE_BREAK)
+}
+
