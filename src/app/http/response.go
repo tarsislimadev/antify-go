@@ -27,6 +27,13 @@ type Response struct {
 	Body ResponseBody
 }
 
+func NewResponse () Response {
+	return Response{
+		Status: "200",
+		ContentType: "application/json",
+	}
+}
+
 func (res Response) SetError(status string, message string) Response {
 	return Response{
 		Status: status,
@@ -39,12 +46,6 @@ func (res Response) SetError(status string, message string) Response {
 		},
 	}
 }
-
-func (res Response) AddHeader(key string, value string) Response {
-	res.Headers = append(res.Headers, key + ": " + value)
-
-	return res
-} 
 
 func (res Response) ToString() string {
 	return strings.Join([]string{
@@ -79,6 +80,7 @@ func (res Response) GetHeaders() string {
 }
 
 func (res Response) SetJSON(json map[string]interface{}) Response {
+	res.Status = "200"
 	res.Body = ResponseBody{"ok", "", json}
 
 	return res
