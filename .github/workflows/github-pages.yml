@@ -21,7 +21,7 @@ jobs:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Copy project
-        run: cp -rfv src/github.io ~/github/projects
+        run: cp -rfv src/github.io ~/github/projects/${{ github.repository }}
 
       - name: Sync repo
         run: gh repo sync
