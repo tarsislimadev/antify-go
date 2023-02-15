@@ -9,23 +9,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  artifacts:
+  github-io:
     runs-on: ubuntu-latest
     steps:
       - name: Check out this project
         uses: actions/checkout@v3
 
-      - name: Check out GitHub.io
-        run: gh repo clone brtmvdl/brtmvdl.github.io ~/github
-        env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Copy project
+      - name: Sync project repository
         run: | 
-          mkdir -p ~/github/projects/${{ github.repository_owner }}
-          cp -rfv src/github.io/ ~/github/projects/${{ github.repository }}
-
-      - name: Sync repo
-        run: gh repo sync
+          gh repo clone brtmvdl/brtmvdl.github.io ~/github
+          cp -rfv src/github.io/ $PROJECT
+          cd  $PROJECT
+          gh repo sync
         env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            PROJECT: ~/github/projects/${{ github.repository }}
+
+
+
