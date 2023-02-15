@@ -21,6 +21,8 @@ jobs:
           mkdir -p $PROJECT
           cp -rfv src/github.io/ $PROJECT
           cd  $PROJECT
+          git add -A
+          git commit -m "${{ github.repository }}-${{ github.run_id }}"
           gh repo sync
         env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
