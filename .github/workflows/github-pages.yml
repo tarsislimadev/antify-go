@@ -17,13 +17,27 @@ jobs:
 
       - name: Sync project repository
         run: | 
+          echo gh repo clone brtmvdl/brtmvdl.github.io ~/github
           gh repo clone brtmvdl/brtmvdl.github.io ~/github
+
+          echo mkdir -p $PROJECT
           mkdir -p $PROJECT
+
+          echo cp -rfv src/github.io/ $PROJECT
           cp -rfv src/github.io/ $PROJECT
+
+          echo cd  $PROJECT
           cd  $PROJECT
+
+          echo git add -A
           git add -A
+
+          echo git commit -m "${{ github.repository }}-${{ github.run_id }}"
           git commit -m "${{ github.repository }}-${{ github.run_id }}"
+
+          echo gh repo sync
           gh repo sync
+
         env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             PROJECT: ~/github/projects/${{ github.repository }}
