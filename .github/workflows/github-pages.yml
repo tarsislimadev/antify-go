@@ -25,11 +25,11 @@ jobs:
           echo gh repo clone brtmvdl/brtmvdl.github.io ~/github
           gh repo clone brtmvdl/brtmvdl.github.io ~/github
 
-          echo mkdir -p $PROJECT
-          mkdir -p $PROJECT
+          echo mkdir -p ~/github/projects/brtmvdl/antify
+          mkdir -p ~/github/projects/brtmvdl/antify
 
-          echo cp -rfv src/github.io/ $PROJECT
-          cp -rfv src/github.io/ $PROJECT
+          echo cp -rfv src/github.io/ ~/github/projects/brtmvdl/antify
+          cp -rfv src/github.io/ ~/github/projects/brtmvdl/antify
 
           echo cd ~/github
           cd ~/github
