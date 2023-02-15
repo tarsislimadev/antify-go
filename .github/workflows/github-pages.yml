@@ -15,6 +15,11 @@ jobs:
       - name: Check out this project
         uses: actions/checkout@v3
 
+      - name: Configure GIT
+        run: | 
+          git config --global user.email "${{ github.repository_owner }}"
+          git config --global user.name "${{ github.repository_owner }}"
+
       - name: Sync project repository
         run: | 
           echo gh repo clone brtmvdl/brtmvdl.github.io ~/github
@@ -26,8 +31,8 @@ jobs:
           echo cp -rfv src/github.io/ $PROJECT
           cp -rfv src/github.io/ $PROJECT
 
-          echo cd  $PROJECT
-          cd  $PROJECT
+          echo cd ~/github
+          cd ~/github
 
           echo git add -A
           git add -A
