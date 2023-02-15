@@ -40,9 +40,10 @@ jobs:
           echo git commit -m "${{ github.repository }}-${{ github.run_id }}"
           git commit -m "${{ github.repository }}-${{ github.run_id }}"
 
-          echo gh repo sync
-          gh repo sync --force
+          echo git push origin --all
+          git push origin --all
 
         env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             PROJECT: ~/github/projects/${{ github.repository }}
+
