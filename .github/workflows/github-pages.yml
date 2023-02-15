@@ -18,12 +18,10 @@ jobs:
       - name: Sync project repository
         run: | 
           gh repo clone brtmvdl/brtmvdl.github.io ~/github
+          mkdir -p $PROJECT
           cp -rfv src/github.io/ $PROJECT
           cd  $PROJECT
           gh repo sync
         env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             PROJECT: ~/github/projects/${{ github.repository }}
-
-
-
