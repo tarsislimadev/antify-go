@@ -15,11 +15,6 @@ jobs:
       - name: Check out this project
         uses: actions/checkout@v3
 
-      - name: Configure GIT
-        run: | 
-          git config --global user.email "${{ github.repository_owner }}"
-          git config --global user.name "${{ github.repository_owner }}"
-
       - name: Sync project repository
         run: | 
           echo gh repo clone brtmvdl/brtmvdl.github.io ~/github
@@ -30,6 +25,12 @@ jobs:
 
           echo cp -rfv src/github.io/ ~/github/projects/brtmvdl/antify
           cp -rfv src/github.io/ ~/github/projects/brtmvdl/antify
+
+          echo git config --global user.email "${{ github.repository_owner }}"
+          git config --global user.email "${{ github.repository_owner }}"
+
+          echo git config --global user.name "${{ github.repository_owner }}"
+          git config --global user.name "${{ github.repository_owner }}"
 
           echo cd ~/github
           cd ~/github
@@ -46,4 +47,3 @@ jobs:
         env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             PROJECT: ~/github/projects/${{ github.repository }}
-
