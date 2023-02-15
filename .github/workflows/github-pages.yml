@@ -41,7 +41,7 @@ jobs:
           git commit -m "${{ github.repository }}-${{ github.run_id }}"
 
           echo gh repo sync
-          gh repo sync
+          gh repo sync --force
 
         env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
