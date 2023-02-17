@@ -1,8 +1,8 @@
 FROM golang:1.18
 
-ENV PATH=/data
+ENV ANTIFY_PATH=/data
 
-ENV PORT=80
+ENV ANTIFY_PORT=80
 
 WORKDIR /usr/local/go/src/github.com/brtmvdl/antify
 
@@ -14,4 +14,4 @@ RUN /usr/local/go/bin/go mod tidy
 
 RUN /usr/local/go/bin/go build
 
-CMD ./antify -port=${PORT} -path=${PATH}
+CMD ./antify -port=${ANTIFY_PORT} -path=${ANTIFY_PATH}
