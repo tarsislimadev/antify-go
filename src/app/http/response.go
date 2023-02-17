@@ -27,7 +27,7 @@ type Response struct {
 	Body ResponseBody
 }
 
-func NewResponse () Response {
+func CreateResponse () Response {
 	return Response{
 		Status: "200",
 		ContentType: "application/json",
@@ -35,16 +35,11 @@ func NewResponse () Response {
 }
 
 func (res Response) SetError(status string, message string) Response {
-	return Response{
-		Status: status,
-		ContentType: res.ContentType,
-		Headers: res.Headers,
-		Body: ResponseBody{
-			Status: "error",
-			Message: message,
-			Data: nil,
-		},
-	}
+	res.Status = status
+
+	res.Body = ResponseBody{"error", message, nil}
+
+	return res
 }
 
 func (res Response) ToString() string {
@@ -59,7 +54,9 @@ func (res Response) ToString() string {
 func GetStatusMessage(status string) string {
 	switch status {
 		case "200": return "OK";
+		case "400": return "CLIENT ERROR";
 		case "404": return "NOT FOUND";
+		case "500": return "SERVER ERROR";
 	}
 
 	return "ERROR";
@@ -81,7 +78,10 @@ func (res Response) GetHeaders() string {
 
 func (res Response) SetJSON(json map[string]interface{}) Response {
 	res.Status = "200"
-	res.Body = ResponseBody{"ok", "", json}
+
+	res.Body.Status = "ok"
+	res.Body.Message = ""
+	res.Body.Data = json
 
 	return res
 }

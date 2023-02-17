@@ -14,7 +14,7 @@ type Request struct {
 	Body string
 }
 
-func NewRequest(conn net.Conn) Request {
+func CreateRequest(conn net.Conn) Request {
 	lines := GetLines(conn)
 
 	return Request{
@@ -34,16 +34,16 @@ func GetLines(conn net.Conn) []string {
 	lines := make([]string, 0)
 
 	for scanner.Scan() {
-		line := ""
+		line := scanner.Text()
 
-		if line = scanner.Text(); line == "" {
-			break
+		if line == "" {
+			return lines
 		}
 
 		lines = append(lines, line)
 	}
 
-	return lines
+	return make([]string, 0)
 }
 
 func GetQueries(lines []string) map[string][]string {
@@ -71,14 +71,14 @@ func GetQueries(lines []string) map[string][]string {
 	return query
 }
 
-func GetQuery(req Request, q string) []string {
+func (req Request) GetQuery(q string) []string {
 	queries := GetQueries(req.Lines)
 
 	return queries[q]
 }
 
 func GetQueryFirst(req Request, q string) string {
-	query := GetQuery(req, q)
+	query := req.GetQuery(q)
 
 	if (len(query) == 0) {
 		return ""
@@ -127,21 +127,11 @@ func GetHeaders(lines []string) map[string]string {
 func GetBody(conn net.Conn) string {
 	scanner := bufio.NewScanner(bufio.NewReader(conn))
 
-	for scanner.Scan() {
-		line := scanner.Text()
+	for scanner.Scan() && scanner.Text() != "" {}
 
-		if line == "" {
-			return scanner.Text()
-		}
-	}
-
-	return ""
+	return scanner.Text()
 }
 
 func (req Request) ToString() string {
-	return strings.Join([]string{
-		GetMethod(req.Lines),
-		GetPath(req.Lines),
-		GetBody(req.Conn),
-	}, LINE_BREAK)
+	return strings.Join(req.Lines, LINE_BREAK) 
 }
