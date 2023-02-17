@@ -13,7 +13,7 @@ At Postman [antify.json](./antify.json)
 Login
 
 ```sh
-curl -sSL 'http://0.0.0.0/login?token=0000&username=username&password=password'
+curl -sSL 'http://0.0.0.0/login?username=username&password=password'
 
 $ login --user user123 --password " abc 123 "
 ```
