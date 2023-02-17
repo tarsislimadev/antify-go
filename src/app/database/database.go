@@ -1,36 +1,38 @@
 package antify
 
 import "os"
-import "strings"
+import "path/filepath"
 import uuid "github.com/brtmvdl/antify/uuid"
 
 const SLASH = "/"
+const DIR_PERMISSION = 0755
+const FILE_PERMISSION = 0644
 
 type Database struct {
 	DataPath string
 }
 
-func (db Database) In(dataPath string) Database {
-	return Database{
-		DataPath: strings.Join([]string{db.DataPath, dataPath}, SLASH),
-	}
+func (db Database) In(path string) Database {
+	return Database{filepath.Join(db.DataPath, path)}
 }
 
-func (db Database) New() DatabaseObject {
+func (db Database) New() (DatabaseObject, error) {
 	obj := DatabaseObject{
 		Database: db,
 		Id: uuid.New(),
 	}
 
-	obj.CreatePath()
+	err := obj.CreatePath()
 
-	return obj
+	if (err != nil) {
+		return DatabaseObject{}, err
+	}
+
+	return obj, nil
 }
 
 func (db Database) ToString() string {
-	return strings.Join([]string{
-		db.DataPath,
-	},LINE_BREAK)
+	return "Database"
 }
 
 type DatabaseObject struct {
@@ -38,10 +40,12 @@ type DatabaseObject struct {
 	Id string
 }
 
-func (obj DatabaseObject) CreatePath() error {
-	path := strings.Join([]string{obj.Database.DataPath, obj.Id}, SLASH)
+func (obj DatabaseObject) GetPath() string {
+	return filepath.Join(obj.Database.DataPath, obj.Id)
+}
 
-	return os.MkdirAll(path, 0644)
+func (obj DatabaseObject) CreatePath() error {
+	return os.MkdirAll(obj.GetPath(), DIR_PERMISSION)
 }
 
 func (obj DatabaseObject) WriteMany(props map[string][]byte) []error {
@@ -58,14 +62,14 @@ func (obj DatabaseObject) WriteMany(props map[string][]byte) []error {
 	return errors
 }
 
+func (obj DatabaseObject) GetPropPath(name string) string {
+	return filepath.Join(obj.GetPath(), name)
+}
+
 func (obj DatabaseObject) Write(name string, value []byte) error {
-	return nil
+	return os.WriteFile(obj.GetPropPath(name), value, FILE_PERMISSION)
 }
 
 func (obj DatabaseObject) ToString() string {
-	return strings.Join([]string{
-		obj.Database.DataPath,
-		obj.Id,
-	}, LINE_BREAK)
+	return "DatabaseObject"
 }
-
