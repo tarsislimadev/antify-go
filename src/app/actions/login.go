@@ -3,7 +3,11 @@ package antify
 import http "github.com/brtmvdl/antify/http"
 
 func Login (req http.Request, res http.Response) http.Response {
-	login := GetDatabase().In("logins").New()
+	login, err := GetDatabase().In("logins").New()
+
+	if (err != nil) {
+		return res.SetError("500", "Error on login creation.")
+	}
 
 	username := http.GetQueryFirst(req, "username")
 	password := http.GetQueryFirst(req, "password")
