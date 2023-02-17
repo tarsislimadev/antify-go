@@ -45,7 +45,7 @@ func dial(port string) {
 func handle(conn net.Conn) {
 	defer conn.Close()
 
-	request := http.NewRequest(conn) 
+	request := http.CreateRequest(conn) 
 	response := run(request)
 
 	fmt.Fprintf(conn, response.ToString() + "\r\n")
@@ -54,9 +54,9 @@ func handle(conn net.Conn) {
 func run(req http.Request) http.Response {
 	fmt.Println("Run: ", req.ToString())
 
-	res := http.NewResponse()
+	res := http.CreateResponse()
 
-	switch http.GetPath(req.Lines) {
+	switch req.Path {
 		case "login": return actions.Login(req, res)
 		case "createuser": return actions.CreateUser(req, res)
 	}
