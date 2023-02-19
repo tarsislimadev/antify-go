@@ -25,7 +25,7 @@ jobs:
     - name: Snapcraft login 
       run: snapcraft login
       env:
-        SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_CREDENTIALS }}
+        SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
 
     - name: Snapcraft whoami
       run: Snapcraft whoami
