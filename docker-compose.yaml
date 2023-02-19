@@ -11,7 +11,7 @@ services:
     ports:
       - '8080:80'
     volumes:
-      - './src/app:/app'
+      - './src/app:/usr/local/go/src/github.com/brtmvdl/antify'
       - './data:/data'
 
   github-release:
