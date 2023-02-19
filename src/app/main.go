@@ -1,4 +1,4 @@
-package main
+package antify
 
 import "os"
 import "fmt"
