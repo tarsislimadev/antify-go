@@ -1,0 +1,33 @@
+name: Snapcraft Beta
+
+on:
+  schedule:
+    - cron: '50 23 * * *'
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+jobs:
+  snapcraft:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform:
+        - i386
+        - amd64
+        - armhf
+        - arm64
+    steps:
+    - name: Check out
+      uses: actions/checkout@v3
+
+    - name: Snap core
+      uses: snapcore/action-build@v1
+      id: snapcraft
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: snap
+        path: ${{ steps.snapcraft.outputs.snap }}
