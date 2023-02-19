@@ -21,6 +21,7 @@ jobs:
       uses: snapcore/action-build@v1
       id: build-snap
       with:
+        path: './src/app'
         snapcraft-args: '--enable-experimental-extensions'
 
   publish:
@@ -30,8 +31,7 @@ jobs:
     - name: Snapcore publish
       uses: snapcore/action-publish@v1
       env:
-        SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.STORE_LOGIN }}
+        SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
       with:
         snap: ${{ needs.build.outputs.snap-file }}
         release: beta
-
