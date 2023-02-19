@@ -11,13 +11,6 @@ on:
 jobs:
   snapcraft:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        platform:
-        - i386
-        - amd64
-        - armhf
-        - arm64
     steps:
     - name: Check out
       uses: actions/checkout@v3
