@@ -11,21 +11,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      snap-file: ${{ steps.build-snap.outputs.snap }}
     steps:
     - name: Checkout
       uses: actions/checkout@v3
 
     - name: Snapcore build
       uses: snapcore/action-build@v1
-      id: build
+      id: build-snap
       with:
         snapcraft-args: '--enable-experimental-extensions'
         path: ./src/app
 
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
     - name: Snapcore publish
       uses: snapcore/action-publish@v1
       env:
-        SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
+        SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.STORE_LOGIN }}
       with:
-        snap: ${{ steps.build.outputs.snap }}
+        snap: ${{ needs.build.outputs.snap-file }}
         release: beta
