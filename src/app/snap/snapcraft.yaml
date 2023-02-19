@@ -4,12 +4,27 @@ version: '0.1.0'
 summary: A fast open source database
 description: A fast open source database
 
+type: app
 grade: stable
 confinement: strict
+architectures:
+  - build-on: amd64
+    build-for: amd64
+
+plugs:
+  antify-config:
+    interface: personal-files
+    read:
+    - $HOME/.data
 
 apps:
   antify:
     command: antify
+    daemon: simple
+    plugs:
+      - network
+      - home
+      - antify-config
 
 parts:
   antify:
