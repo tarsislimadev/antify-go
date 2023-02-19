@@ -22,7 +22,7 @@ jobs:
     - name: Snap Build
       run: echo Snap Build with $SNAPCRAFT_STORE_CREDENTIALS
       env:
-        SNAPCRAFT_STORE_CREDENTIALS: ${{ secret.SNAP_CREDENTIALS }}
+        SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_CREDENTIALS }}
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
