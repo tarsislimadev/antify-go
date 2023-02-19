@@ -1,18 +1,11 @@
 name: antify 
 base: core20 
-version: '0.1.0' 
+version: '0.1' 
 summary: A fast open source database
 description: A fast open source database
 
-type: app
-grade: stable
-confinement: strict
-
-plugs:
-  antify-config:
-    interface: personal-files
-    read:
-    - $HOME/.data
+grade: devel
+confinement: devmode
 
 apps:
   antify:
@@ -21,9 +14,9 @@ apps:
     plugs:
       - network
       - home
-      - antify-config
 
 parts:
   antify:
     plugin: go
     source: https://github.com/brtmvdl/antify.git
+    source-type: git
