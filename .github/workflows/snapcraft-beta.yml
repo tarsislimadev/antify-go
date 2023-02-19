@@ -21,7 +21,6 @@ jobs:
       uses: snapcore/action-build@v1
       id: build-snap
       with:
-        path: './src/app'
         snapcraft-args: '--enable-experimental-extensions'
 
   publish:

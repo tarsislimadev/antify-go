@@ -23,5 +23,5 @@ apps:
 parts:
   antify:
     plugin: go
-    source: https://github.com/brtmvdl/antify.git
-    source-type: git
+    source: ./src/app
+
