@@ -22,7 +22,6 @@ jobs:
       id: build-snap
       with:
         snapcraft-args: '--enable-experimental-extensions'
-        path: ./src/app
 
   publish:
     runs-on: ubuntu-latest
@@ -35,3 +34,4 @@ jobs:
       with:
         snap: ${{ needs.build.outputs.snap-file }}
         release: beta
+
