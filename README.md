@@ -4,6 +4,8 @@
 
 A fast open source database
 
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/antify)
+
 ## Documentation
 
 At Postman [antify.json](./antify.json)
