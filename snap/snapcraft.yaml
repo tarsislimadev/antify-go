@@ -8,7 +8,10 @@ grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
 
 parts:
-  helloworld:
+  antify:
     plugin: go
-    source: ./src/app
-    go-importpath: helloworld
+    source: https://github.com/brtmvdl/antify.git
+    go-importpath: github.com/brtmvdl/antify
+    build-packages:
+        - build-essential
+
