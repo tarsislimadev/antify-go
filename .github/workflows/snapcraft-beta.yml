@@ -15,9 +15,12 @@ jobs:
     - name: Check out
       uses: actions/checkout@v3
 
-    - name: Snap core
-      uses: snapcore/action-build@v1
+    - name: Snap Install
+      run: echo Instal Snap
       id: snapcraft
+
+    - name: Snap Build
+      run: echo Snap Build
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
