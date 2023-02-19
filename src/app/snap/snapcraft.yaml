@@ -4,8 +4,8 @@ version: '0.1.0'
 summary: A fast open source database
 description: A fast open source database
 
-grade: devel
-confinement: devmode 
+grade: beta
+confinement: strict
 
 apps:
   antify:
