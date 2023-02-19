@@ -23,15 +23,12 @@ jobs:
       id: snapcraft
 
     - name: Snapcraft login 
-      run: snapcraft login --with $SNAPCRAFT_STORE_CREDENTIALS
+      run: snapcraft login # --with $SNAPCRAFT_STORE_CREDENTIALS
       env:
         SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
 
     - name: Snapcraft whoami
-      run: Snapcraft whoami
+      run: snapcraft whoami
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: snap
-        path: ${{ steps.snapcraft.outputs.snap }}
+    - name: Snapcraft push
+      run: snapcraft push
