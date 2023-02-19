@@ -23,7 +23,7 @@ jobs:
       id: snapcraft
 
     - name: Snapcraft login 
-      run: snapcraft login
+      run: snapcraft login --with $SNAPCRAFT_STORE_CREDENTIALS
       env:
         SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
 
