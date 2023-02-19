@@ -21,7 +21,7 @@ jobs:
       uses: snapcore/action-build@v1
       id: build-snap
       with:
-        snapcraft-args: '--enable-experimental-extensions'
+        snapcraft-args: '--enable-experimental-extensions --debug'
 
   publish:
     runs-on: ubuntu-latest
