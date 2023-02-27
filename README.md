@@ -8,7 +8,7 @@ A fast open source database
 
 ## Documentation
 
-At Postman [antify.json](./antify.json)
+At Postman [Antify.json](./antify.json)
 
 ### LOGIN
 
