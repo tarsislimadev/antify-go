@@ -2,18 +2,18 @@ version: '3'
 
 services:
 
-  app:
+  api:
     image: 'tmvdl/projects:antify'
-    build: './src/app'
+    build: './src/api'
     environment:
       - 'ANTIFY_PORT=80'
       - 'ANTIFY_PATH=/data'
     ports:
       - '8080:80'
     volumes:
-      - './src/app:/usr/local/go/src/github.com/brtmvdl/antify'
+      - './src/api:/usr/local/go/src/github.com/brtmvdl/antify'
       - './data:/data'
 
   github-release:
     image: 'github-release'
-    build: './src/app'
+    build: './src/api'
