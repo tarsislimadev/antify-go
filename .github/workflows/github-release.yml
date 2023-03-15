@@ -21,8 +21,10 @@ jobs:
       - name: Export app
         run: |
           docker run github-release ls -laR /usr/local/go/src
-          docker run -v $(pwd)/dist:/dist github-release find -name antify
           # docker run -v $(pwd)/dist:/dist github-release /bin/cp -rfv /usr/local/go/src/github.com/brtmvdl/antify/antify /dist
+
+      - name: List release
+        run: docker run github-release find -name antify
 
       - name: Create release
         run: gh release create v$( date +%Y%m%d%H%M ) $(pwd)/dist/*
