@@ -1,4 +1,4 @@
-FROM golang:1.18
+FROM golang:1.20
 
 ENV ANTIFY_PATH=/data
 
@@ -14,7 +14,7 @@ RUN /usr/local/go/bin/go mod tidy
 
 RUN /usr/local/go/bin/go build
 
-RUN /usr/bin/ls -laR antify
+RUN /bin/ls -laR antify
 
 RUN find / -name antify
 
