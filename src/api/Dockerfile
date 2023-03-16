@@ -14,6 +14,6 @@ RUN /usr/local/go/bin/go mod tidy
 
 RUN /usr/local/go/bin/go build
 
-RUN /usr/bin/ls
+RUN /bin/ls
 
 CMD ./antify -port=${ANTIFY_PORT} -path=${ANTIFY_PATH}
