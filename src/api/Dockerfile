@@ -14,7 +14,7 @@ RUN /usr/local/go/bin/go mod tidy
 
 RUN /usr/local/go/bin/go build
 
-RUN /bin/ls -laR antify
+RUN cd / && /bin/ls -laR antify
 
 RUN find / -name antify
 
