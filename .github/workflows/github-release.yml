@@ -18,8 +18,8 @@ jobs:
       - name: Docker build
         run: docker-compose build github-release
 
-      # - name: List release
-      #   run: docker run github-release find -name antify
+      - name: List release
+        run: docker run github-release find -name antify
 
       - name: Export app
         run: docker run -v $(pwd)/dist:/dist github-release /bin/cp -rfv ./antify /dist/antify
