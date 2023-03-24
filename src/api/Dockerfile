@@ -12,8 +12,6 @@ RUN /usr/local/go/bin/go mod init github.com/brtmvdl/antify
 
 RUN /usr/local/go/bin/go mod tidy
 
-RUN /usr/local/go/bin/go build
+RUN /usr/local/go/bin/go build -o /usr/bin/antify 
 
-# RUN /usr/bin/ls
-
-CMD ./antify -port=${ANTIFY_PORT} -path=${ANTIFY_PATH}
+CMD /usr/bin/antify -port=${ANTIFY_PORT} -path=${ANTIFY_PATH}
