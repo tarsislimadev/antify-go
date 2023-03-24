@@ -22,10 +22,9 @@ jobs:
         run: docker run github-release find -name antify
 
       - name: Export app
-        run: docker run -v $(pwd)/dist:/dist github-release /bin/cp -rfv ./antify /dist/antify
+        run: docker run -v $(pwd)/dist:/dist github-release cp -rfv /usr/local/go/src/github.com/brtmvdl/antify/antify /dist/antify
 
       - name: Create release
-        run: gh release create v$( date +%Y%m%d%H%M ) $(pwd)/dist/*
+        run: gh release create v$( date +%Y%m%d%H%M ) $(pwd)/dist/antify
         env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
